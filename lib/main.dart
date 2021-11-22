@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
       title: 'Material App',
       initialRoute: 'homeScreen',
       routes: {
-        'homeScreen': (_) => const HomeScreen(),
+        'homeScreen': (_) => HomeScreen(),
       },
     );
   }
