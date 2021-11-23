@@ -9,8 +9,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    var cardHeight = size.height / 2.5;
-    int selectedItem = 0;
+    var cardHeight = size.height / 2;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -100,11 +99,11 @@ class HomeBody extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           const SizedBox(
-            height: 35.0,
+            height: 15.0,
           ),
           HomeHeadingText(),
           SizedBox(
-            height: 100,
+            height: 50,
           ),
           HomeSlider(cardHeight: cardHeight, size: size)
         ],

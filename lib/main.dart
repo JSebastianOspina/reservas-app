@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reservas_app/views/home_screen.dart';
+import 'package:reservas_app/views/select_service_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -9,9 +10,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      initialRoute: 'homeScreen',
+      initialRoute: 'selectServiceScreen',
       routes: {
-        'homeScreen': (_) => HomeScreen(),
+        'homeScreen': (_) => const HomeScreen(),
+        'selectServiceScreen': (_) => const SelectServiceScreen()
       },
     );
   }
