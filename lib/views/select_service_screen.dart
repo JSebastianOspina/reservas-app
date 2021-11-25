@@ -8,7 +8,6 @@ class SelectServiceScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.indigo,
       appBar: AppBar(
-        leading: const Icon(Icons.keyboard_arrow_left, size: 30),
         actions: const [
           Padding(
             padding: EdgeInsets.only(right: 20),
@@ -32,7 +31,7 @@ class SelectServiceScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Servicios',
+              '¿Con quien quieres tu cita?',
               style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w800,

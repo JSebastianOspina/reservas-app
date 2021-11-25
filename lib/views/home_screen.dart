@@ -1,7 +1,7 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
+import 'package:flutter/rendering.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -9,21 +9,198 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    var cardHeight = size.height / 2;
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.white,
-          leading: const Icon(
-            Icons.menu,
-            size: 32,
-          ),
-          foregroundColor: Colors.black),
-      body: HomeBody(size: size, cardHeight: cardHeight),
-      // ignore: prefer_const_literals_to_create_immutables
       bottomNavigationBar: HomeBottomNavigationBar(),
+      body: SafeArea(
+        child: Container(
+          padding: const EdgeInsets.all(15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const greyBackgroundTextField(),
+              SizedBox(
+                height: 25,
+              ),
+              Text(
+                'Servicios destacados',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Slider(size: size),
+              SizedBox(
+                height: 25,
+              ),
+              Text(
+                'Todos los servicios',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Expanded(
+                child: _AllServicesVerticalSlider(size: size),
+              )
+            ],
+          ),
+        ),
+      ),
     );
+  }
+}
+
+class _AllServicesVerticalSlider extends StatelessWidget {
+  const _AllServicesVerticalSlider({
+    Key? key,
+    required this.size,
+  }) : super(key: key);
+
+  final Size size;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      //padding: EdgeInsets.all(10),
+      itemCount: 4,
+      itemBuilder: (_, int i) {
+        return GestureDetector(
+          onTap: () {
+            Navigator.of(context).pushNamed('selectServiceScreen');
+          },
+          child: Container(
+            margin: EdgeInsets.symmetric(vertical: 10),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 2,
+                  spreadRadius: 1,
+                  color: Colors.grey.withOpacity(0.2),
+                  offset: Offset(2, 2),
+                ),
+              ],
+            ),
+            height: 120,
+            padding: EdgeInsets.all(10),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: Image.asset(
+                    'assets/$i.jpg',
+                    width: size.width / 3.5,
+                    height: size.width / 3.5,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Corte de barba',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold)),
+                    Text(
+                      'Realizado por expertos',
+                      style: TextStyle(fontWeight: FontWeight.w300),
+                    ),
+                  ],
+                ),
+                Icon(Icons.favorite)
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class Slider extends StatelessWidget {
+  const Slider({
+    Key? key,
+    required this.size,
+  }) : super(key: key);
+
+  final Size size;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 165,
+      child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (_, i) {
+            return GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushNamed('selectServiceScreen');
+              },
+              child: Container(
+                margin: EdgeInsets.only(right: 15.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(17)),
+                  image: DecorationImage(
+                      image: AssetImage('assets/$i.jpg'), fit: BoxFit.cover),
+                ),
+                width: size.width * 0.65,
+                height: 170,
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Text(
+                    'Corte de cabello',
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                ),
+              ),
+            );
+          },
+          itemCount: 3),
+    );
+  }
+}
+
+class greyBackgroundTextField extends StatelessWidget {
+  const greyBackgroundTextField({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+        style: TextStyle(color: Colors.grey[600]),
+        decoration: InputDecoration(
+          contentPadding: const EdgeInsets.all(1),
+          prefixIcon: Icon(Icons.search, color: Colors.grey[500]),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.grey.shade200,
+            ),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(20),
+            ),
+          ),
+          hintText: 'Buscar',
+          filled: true,
+          fillColor: Colors.grey[100],
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey.shade100, width: 1),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(15),
+            ),
+          ),
+        ));
   }
 }
 
@@ -67,182 +244,5 @@ class _HomeBottomNavigationBarState extends State<HomeBottomNavigationBar> {
             label: 'Mis citas',
           )
         ]);
-  }
-}
-
-class HomeBody extends StatelessWidget {
-  const HomeBody({
-    Key? key,
-    required this.size,
-    required this.cardHeight,
-  }) : super(key: key);
-
-  final Size size;
-  final double cardHeight;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: size.width,
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 15.0,
-          ),
-          Text(
-            'NORDICOS',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 60,
-              color: Colors.indigo[400],
-            ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(
-            height: 15.0,
-          ),
-          HomeHeadingText(),
-          SizedBox(
-            height: 50,
-          ),
-          HomeSlider(cardHeight: cardHeight, size: size)
-        ],
-      ),
-    );
-  }
-}
-
-class HomeHeadingText extends StatelessWidget {
-  const HomeHeadingText({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          Text(
-            'Hola, Sara',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(
-            height: 15.0,
-          ),
-          Text(
-            '¿Que te gustaría hacerte hoy?',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-            textAlign: TextAlign.start,
-          ),
-        ]);
-  }
-}
-
-class HomeSlider extends StatelessWidget {
-  const HomeSlider({
-    Key? key,
-    required this.cardHeight,
-    required this.size,
-  }) : super(key: key);
-
-  final double cardHeight;
-  final Size size;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: cardHeight,
-      child: Swiper(
-          scale: 0.95,
-          viewportFraction: 0.9,
-          itemCount: 4,
-          itemBuilder: (_, i) {
-            return Container(
-              clipBehavior: Clip.antiAlias,
-              decoration: BoxDecoration(
-                  color: Colors.grey[100],
-                  borderRadius: BorderRadius.circular(12)),
-              width: size.width,
-              height: double.infinity,
-              child: Column(
-                children: [
-                  ClipRRect(
-                    child: Image.asset(
-                      'assets/$i.jpg',
-                      fit: BoxFit.cover,
-                      height: cardHeight / 2,
-                      width: double.infinity,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Row(
-                      children: [
-                        Image.asset(
-                          'assets/icons/1.png',
-                          width: 45,
-                          height: 45,
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          // ignore: prefer_const_literals_to_create_immutables
-                          children: [
-                            Text(
-                              'Corte de cabello',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18.0,
-                              ),
-                            ),
-                            Text(
-                              'Incluye bebida de cortesia',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w300,
-                                fontSize: 14.0,
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                          padding:
-                              MaterialStateProperty.all<EdgeInsetsGeometry?>(
-                            EdgeInsets.symmetric(vertical: 18.0),
-                          ),
-                          backgroundColor: MaterialStateProperty.all<Color?>(
-                            Colors.indigo,
-                          ),
-                        ),
-                        onPressed: () => {},
-                        child: Text('Agendar cita',
-                            style: TextStyle(
-                                fontSize: 17, fontWeight: FontWeight.bold)),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  )
-                ],
-              ),
-            );
-          }),
-    );
   }
 }

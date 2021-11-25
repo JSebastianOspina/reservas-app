@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      initialRoute: 'selectServiceScreen',
+      initialRoute: 'homeScreen',
       routes: {
         'homeScreen': (_) => const HomeScreen(),
         'selectServiceScreen': (_) => const SelectServiceScreen()
