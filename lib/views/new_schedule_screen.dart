@@ -237,7 +237,8 @@ class _OrderDetails extends StatelessWidget {
                       const EdgeInsets.all(15)),
                   backgroundColor:
                       MaterialStateProperty.all<Color?>(Colors.black)),
-              onPressed: () => {},
+              onPressed: () =>
+                  {Navigator.pushNamed(context, 'scheduleConfirmationScreen')},
               child: const Text(
                 'CONFIRMAR CITA',
                 style: TextStyle(
