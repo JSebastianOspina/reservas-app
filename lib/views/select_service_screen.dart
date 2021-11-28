@@ -160,7 +160,8 @@ class _ServiceCard extends StatelessWidget {
                       Colors.indigo,
                     ),
                   ),
-                  onPressed: () => {},
+                  onPressed: () =>
+                      {Navigator.pushNamed(context, 'newScheduleScreen')},
                   child: const Text(
                     'Agendar cita',
                   ),

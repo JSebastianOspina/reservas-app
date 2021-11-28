@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:reservas_app/views/home_screen.dart';
+import 'package:reservas_app/views/new_schedule_screen.dart';
 import 'package:reservas_app/views/select_service_screen.dart';
 
 void main() => runApp(MyApp());
@@ -13,7 +14,8 @@ class MyApp extends StatelessWidget {
       initialRoute: 'homeScreen',
       routes: {
         'homeScreen': (_) => const HomeScreen(),
-        'selectServiceScreen': (_) => const SelectServiceScreen()
+        'selectServiceScreen': (_) => const SelectServiceScreen(),
+        'newScheduleScreen': (_) => const NewScheduleScreen()
       },
     );
   }
